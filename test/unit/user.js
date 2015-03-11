@@ -2,6 +2,8 @@
 
 'use strict';
 
+require('babel/register');
+
 var User = require('../../server/models/user');
 var expect = require('chai').expect;
 var Lab = require('lab');
@@ -79,4 +81,40 @@ describe('User Model', function() {
       });
     });
   });
+
+  describe('.create', function() {
+    it('should create a user', function(done) {
+      User.create('facebook', {facebook: 'facebook', displayName:'TJENSEN', photoUrl:'http://graph.facebook.com/undefined/picture?type=large'}, function(err, user) {
+        expect(err).to.not.be.ok;
+        expect(user.displayName).to.equal('TJENSEN')
+        expect(user.createdAt).to.be.instanceof(Date);
+        expect(user._id).to.be.ok;
+        expect(user).to.be.ok;
+        done();
+      });
+    });
+    it('should NOT create a user - duplication', function(done) {
+      User.create('facebook', {facebook: 'facebook', displayName:'MJ', photoUrl:'http://graph.facebook.com/undefined/picture?type=large'}, function(err, user) {
+        expect(err).to.not.be.ok;
+        expect(user.displayName).to.equal('MJ')
+        expect(user.createdAt).to.be.instanceof(Date);
+        expect(user._id).to.be.ok;
+        expect(user).to.be.ok;
+        done();
+      });
+    });
+
+  });
+
+  describe('#token', function() {
+    it('should create a token from a user', function(done) {
+      User.create('facebook', {facebook: 1}, function(err, user) {
+        var token = user.token();
+        expect(token).to.have.length(179);
+        done();
+      });
+    });
+  });
+
+
 });

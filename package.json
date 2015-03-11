@@ -1,6 +1,6 @@
 {
-  "name": "angular-prototype",
-  "description": "Angular Prototype Application",
+  "name": "trvlBud",
+  "description": "Geolocation Prototype Application",
   "homepage": "https://github.com/coding-house-jan2015/angular-prototype",
   "engines": {
     "node": "0.12.x"
@@ -24,14 +24,41 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node server/index.js",
-    "localhost": "MONGO_URL=mongodb://localhost/angular-prototype-prod PORT=3333 nodemon -e js,jade server/index.js",
+    "localhost": "MONGO_URL=mongodb://localhost/trvlBud-prod PORT=3333 nodemon -e js,jade server/index.js",
     "preinstall": "rm -rf node_modules public",
     "postinstall": "bower install && gulp build",
-    "test": "MONGO_URL=mongodb://localhost/angular-prototype-test lab -l -v -m 5000 test/unit test/acceptance"
+    "test": "MONGO_URL=mongodb://localhost/trvlBud-test lab -l -v -m 5000 test/unit test/acceptance"
   },
   "license": "MIT",
   "dependencies": {
+    "async": "^0.9.0",
+    "babel": "^4.7.4",
+    "bcrypt": "^0.8.1",
+    "good": "^5.1.2",
+    "good-console": "^4.1.0",
+    "hapi": "^8.2.0",
+    "hapi-auth-jwt": "^2.1.0",
+    "joi": "^6.0.4",
+    "jwt-simple": "^0.2.0",
+    "lodash": "^3.5.0",
+    "moment": "^2.9.0",
+    "mongoose": "^3.8.24",
+    "querystring": "^0.2.0",
+    "request": "^2.53.0"
   },
   "devDependencies": {
+    "bower": "^1.3.12",
+    "chai": "^2.1.1",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-copy": "0.0.2",
+    "gulp-jade": "^1.0.0",
+    "gulp-jshint": "^1.9.2",
+    "gulp-less": "^3.0.1",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-watch": "^4.1.1",
+    "jshint-stylish": "^1.0.1",
+    "lab": "^5.4.0"
   }
 }

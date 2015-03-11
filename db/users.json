@@ -8,7 +8,15 @@
   {
     "_id" : {"$oid":"000000000000000000000002"},
     "email" : "sam@aol.com",
+    "facebook" : 1,
     "password" : "$2a$08$NBLq8G/UigORU4Ak6fr8yuIIbvsF3hMMrSJNk0QgXSC8b6hfI33pq",
     "createdAt" : {"$date":1424828111020}
+  },
+  {
+    "_id" : ObjectId("54ff803509fa2c47dfa1c073"),
+    "displayName" : "MJ",
+    "photoUrl" : "http://graph.facebook.com/undefined/picture?type=large",
+    "createdAt" : ISODate("2015-03-10T23:37:25.183Z"),
+    "__v" : 0
   }
 ]

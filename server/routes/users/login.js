@@ -12,13 +12,10 @@ module.exports = {
     }
   },
   handler: function(request, reply) {
-    User.authenticate(request.payload, function(err, user) {
-      if(err){
-        reply().code(400);
-      }else{
-        request.auth.session.set(user);
-        reply({email:user.email});
-      }
+    User.authenticate(request.payload, function(err, user){
+      if(err){return reply().code(400);}
+      let token = user.token();
+      reply({token:token, user:user});
     });
   }
 };

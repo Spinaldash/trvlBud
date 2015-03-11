@@ -1,0 +1,28 @@
+h1 New Vacation
+
+.row
+  .col-xs-4
+    form(name='vacationForm', novalidate)
+      .form-group
+        label(for='title') Title
+        input.form-control(type='text', name='title', autofocus=true, ng-model='vacation.title', required, ng-minlength='3', ng-maxlength='18')
+        .alert.alert-danger(role='alert', ng-if='vacationForm.title.$dirty && vacationForm.title.$invalid',  ng-messages='vacationForm.title.$error', ng-messages-include='/views/partials/form_validation_messages.html')
+      .form-group
+        label(for='departureDate') Departure
+        input.form-control(type='date', name='departureDate', ng-model='vacation.departureDate', required)
+        div.alert.alert-danger(role='alert', ng-if='vacationForm.departureDate.$touched && vacationForm.departureDate.$invalid',  ng-messages='vacationForm.departureDate.$error', ng-messages-include='/views/partials/form_validation_messages.html')
+      .form-group
+        label(for='arrivalDate') Arrival
+        input.form-control(type='date', name='arrivalDate', ng-model='vacation.arrivalDate', required)
+        div.alert.alert-danger(role='alert', ng-if='vacationForm.arrivalDate.$touched && vacationForm.arrivalDate.$invalid',  ng-messages='vacationForm.arrivalDate.$error', ng-messages-include='/views/partials/form_validation_messages.html')
+      .form-group
+        label(for='departureAirport') Departure Airport
+        input.form-control(type='text', name='departureAirport', ng-model='vacation.departureAirport', required, ng-minlength='3', ng-maxlength='3')
+        div.alert.alert-danger(role='alert', ng-if='vacationForm.departureAirport.$dirty && vacationForm.departureAirport.$invalid',  ng-messages='vacationForm.departureAirport.$error', ng-messages-include='/views/partials/form_validation_messages.html')
+      .form-group
+        label(for='departureAirport') Arrival Airport
+        input.form-control(type='text', name='arrivalAirport', ng-model='vacation.arrivalAirport', required, ng-minlength='3', ng-maxlength='3')
+        div.alert.alert-danger(role='alert', ng-if='vacationForm.arrivalAirport.$dirty && vacationForm.arrivalAirport.$invalid',  ng-messages='vacationForm.arrivalAirport.$error', ng-messages-include='/views/partials/form_validation_messages.html')
+      .form-group
+        button.btn.btn-primary(type='submit', ng-if='vacationForm.$dirty' ng-click='submit(vacation)') Submit
+  .col-xs-8
