@@ -11,9 +11,14 @@ angular.module('angular-prototype', ['ui.router', 'ngMessages', 'satellizer'])
 
       .state('vacations', {url:'/vacations', templateUrl:'/views/vacations/vacations.html', abstract:true})
       .state('vacations.new', {url:'/new', templateUrl:'/views/vacations/vacations_new.html', controller: 'VacationsNewCtrl'})
+      .state('vacations.show', {url:'/{vacationId}', templateUrl:'/views/vacations/vacation_show.html', controller:'VacationsShowCtrl'})
+      .state('vacations.list', {url:'', templateUrl:'/views/vacations/vacations_list.html', controller:'VacationsListCtrl'})
+
 
       .state('register', {url:'/register', templateUrl:'/views/users/users.html', controller:'UsersCtrl'})
       .state('login', {url:'/login', templateUrl:'/views/users/users.html', controller:'UsersCtrl'});
+
+
 
     $authProvider.twitter({url: '/auth/twitter'});
     $authProvider.facebook({clientId: '428699207289211'});

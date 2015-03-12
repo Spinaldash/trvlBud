@@ -1,0 +1,21 @@
+h1 VACATIONS LIST
+.container-fluid
+  .row
+    .col-xs-6
+      table.table.table-hover
+        thead
+          tr
+            th Title
+            th Departure Date
+            th Depature Port
+            th Arrival Date
+            th Arrival Part
+        tbody
+          tr(ng-repeat='vacation in vacations', ng-click='submit(vacation._id)')  
+            td {{vacation.title}}
+            td {{vacation.departureDate}}
+            td {{vacation.departureAirport}}
+            td {{vacation.arrivalDate}}
+            td {{vacation.arrivalAirport}}
+        
+        

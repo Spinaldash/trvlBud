@@ -86,7 +86,7 @@ describe('User Model', function() {
     it('should create a user', function(done) {
       User.create('facebook', {facebook: 'facebook', displayName:'TJENSEN', photoUrl:'http://graph.facebook.com/undefined/picture?type=large'}, function(err, user) {
         expect(err).to.not.be.ok;
-        expect(user.displayName).to.equal('TJENSEN')
+        expect(user.displayName).to.equal('TJENSEN');
         expect(user.createdAt).to.be.instanceof(Date);
         expect(user._id).to.be.ok;
         expect(user).to.be.ok;
@@ -96,7 +96,7 @@ describe('User Model', function() {
     it('should NOT create a user - duplication', function(done) {
       User.create('facebook', {facebook: 'facebook', displayName:'MJ', photoUrl:'http://graph.facebook.com/undefined/picture?type=large'}, function(err, user) {
         expect(err).to.not.be.ok;
-        expect(user.displayName).to.equal('MJ')
+        expect(user.displayName).to.equal('MJ');
         expect(user.createdAt).to.be.instanceof(Date);
         expect(user._id).to.be.ok;
         expect(user).to.be.ok;

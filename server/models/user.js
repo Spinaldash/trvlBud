@@ -115,7 +115,7 @@ userSchema.methods.token = function(){
 userSchema.statics.register = function(o, cb){
   User.findOne({email:o.email}, function(err, user) {
     if (user) {return cb(true);}
-    let user = new User(o);
+    user = new User(o);
     user.password = bcrypt.hashSync(o.password, 8);
     user.save(cb);
   });

@@ -22,7 +22,7 @@ angular.module('angular-prototype')
       if($scope.name === 'Register'){
         if((user.password1 === user.password2) && (user.email)){
             $auth.signup({email:user.email, password:user.password1})
-            .then(login)
+            .then(login);
           }else{
           user.password1 = user.password2 = '';
         }
