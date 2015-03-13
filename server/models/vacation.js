@@ -6,6 +6,7 @@ let Request = require('request');
 let qs = require('querystring');
 let jwt = require('jwt-simple');
 let moment = require('moment');
+let stripe = require('stripe')(process.env.STRIPE_SECRET);
 let Vacation;
 
 let vacationSchema = mongoose.Schema({
@@ -15,8 +16,69 @@ let vacationSchema = mongoose.Schema({
   arrivalDate: {type: Date, required: true},
   departureDate: {type: Date, required: true},
   userId: {type: mongoose.Schema.ObjectId, ref: 'User', required: true},
-  createdAt: {type: Date, default: Date.now, required: true}
+  createdAt: {type: Date, default: Date.now, required: true},
+  flight: {
+    charge: {
+      id: String,
+      amount: Number,
+      date: {type: Date}
+    },
+    itinerary: {
+      leaving: [{
+        departure: String,
+        arrival: String,
+        duration: Number,
+        flight: Number,
+        airline: String
+      }],
+      returning: [{
+        departure: String,
+        arrival: String,
+        duration: Number,
+        flight: Number,
+        airline: String
+      }]
+    }
+  }
 });
+
+vacationSchema.methods.assignItin = function(o) {
+  this.flight.itinerary.leaving = o.itinerary.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment.map(s=>{
+    return {
+      departure: s.DepartureAirport.LocationCode,
+      arrival: s.ArrivalAirport.LocationCode,
+      duration: s.ElapsedTime,
+      flight: s.OperatingAirline.FlightNumber,
+      airline: s.OperatingAirline.Code
+    }
+  });
+  this.flight.itinerary.returning = o.itinerary.OriginDestinationOptions.OriginDestinationOption[1].FlightSegment.map(s=>{
+    return {
+      departure: s.DepartureAirport.LocationCode,
+      arrival: s.ArrivalAirport.LocationCode,
+      duration: s.ElapsedTime,
+      flight: s.OperatingAirline.FlightNumber,
+      airline: s.OperatingAirline.Code
+    }
+  });
+};
+
+vacationSchema.methods.purchase = function(o, cb) {
+  console.log('o in the model:', o);
+  stripe.charges.create({
+    amount: Math.ceil(o.cost * 100),
+    currency: "usd",
+    source: o.token,
+    description: o.description
+  }, (err,charge)=>{
+    if(!err) {
+      this.flight.charge.id = charge.id;
+      this.flight.charge.amount = charge.amount / 100;
+      this.flight.charge.date = new Date;
+    }
+    cb(err, charge);
+  });
+};
 
 vacationSchema.statics.flights = function(o, cb) {
   var options = { //Sets the options for the first request to user key1 to get key2
@@ -41,7 +103,6 @@ vacationSchema.statics.flights = function(o, cb) {
 
       Request(options, function(err, response, body){
         body = JSON.parse(body);
-        console.log('the Cb is taking this body:', body);
         cb(err, body);
       });
   });

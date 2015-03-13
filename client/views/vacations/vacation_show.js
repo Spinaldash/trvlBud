@@ -8,12 +8,15 @@ angular.module('angular-prototype')
       $scope.vacation = response.data.vacation;
     });
 
+    $scope.$on('flight-purchased', (event, vacation)=>{
+      $scope.vacation = vacation;
+    });
 
-    $scope.submit = function(flights) {
-      console.log('flights equals:', flights);
-      Vacation.showFlights(flights)
+    $scope.submit = function() {
+      Vacation.showFlights($scope.vacation)
       .then(function(response) {
-        console.log('Flights Response is:', response);
+        $scope.flights = response.data.PricedItineraries;
+        console.log('flights equals:', $scope.flights);
       });
     };
 

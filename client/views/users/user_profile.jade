@@ -1,0 +1,20 @@
+h1 {{name}}
+
+.row
+  .col-xs-4
+    form
+      .form-group(ng-if='user.email')
+        label(for='email') Email: 
+        input#email.form-control(type='email', name='email', autofocus=true, ng-model='user.email', value='user.email')
+      .form-group(ng-if='user.github')
+        div You are registered with github username: {{user.github}}
+      .form-group(ng-if='user.facebook')
+        div You are registered with facebook username: {{user.facebook}}
+      .form-group(ng-if='user.twitter')
+        div You are registered with twitter username: {{user.twitter}}    
+      .form-group
+        label(for='phoneNumber') Phone Number: 
+        input#phoneNumber.form-control(type='number', name='phoneNumber', ng-model='user.phoneNumber', value='user.phoneNumber')
+      .form-group
+        button.btn.btn-primary(type='submit', ng-click='submit(user)') Update
+  .col-xs-8

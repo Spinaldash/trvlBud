@@ -16,7 +16,8 @@ let userSchema = mongoose.Schema({
   github: String,
   linkedin: String,
   twitter: String,
-  createdAt: {type: Date, default: Date.now, required: true}
+  createdAt: {type: Date, default: Date.now, required: true},
+  phoneNumber: Number
 });
 
 userSchema.statics.preTwitter = function(cb){

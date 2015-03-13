@@ -1,4 +1,82 @@
-.container-fluid
-  h1 Show Item
-  h1 Vacation Name: {{vacation.title}}
-  button.btn.btn-primary(type='submit', ng-click='submit(vacation._id)') Submit
+div
+  h1.text-capitalize.page-header {{vacation.title}}
+div(mj-stripe-brain)
+div(ng-if='!vacation.flight.charge.id')
+  button.btn.btn-primary(type='submit', ng-click='submit()') Find Flights
+  .container-fluid
+    .row
+      .col-xs-10
+        table.table.table-striped(ng-repeat='flight in flights | limitTo:5')  
+          thead
+            tr
+              th Departure Date
+              th Departure Time
+              th Depature Port
+              th Arrival Date
+              th Arrival Time
+              th Arrival Port
+              th Airline
+              th Flight Number
+              th Price
+          tbody
+            tr(ng-repeat='segment in flight.AirItinerary.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment')
+              td {{segment.DepartureDateTime | date: 'MMM.d'}} 
+              td {{segment.DepartureDateTime | date: 'h:mma'}}
+              td {{segment.DepartureAirport.LocationCode}}
+              td {{segment.ArrivalDateTime | date: 'MMM.d'}}
+              td {{segment.ArrivalDateTime | date: 'h:mma'}}
+              td {{segment.ArrivalAirport.LocationCode}} 
+              td {{segment.OperatingAirline.Code}} 
+              td {{segment.OperatingAirline.FlightNumber}} 
+              td {{flight.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount | currency}}
+            tr(ng-repeat='segment in flight.AirItinerary.OriginDestinationOptions.OriginDestinationOption[1].FlightSegment')
+              td {{segment.DepartureDateTime | date: 'MMM.d'}} 
+              td {{segment.DepartureDateTime | date: 'h:mma'}}
+              td {{segment.DepartureAirport.LocationCode}}
+              td {{segment.ArrivalDateTime | date: 'MMM.d'}}
+              td {{segment.ArrivalDateTime | date: 'h:mma'}}
+              td {{segment.ArrivalAirport.LocationCode}}
+              td {{segment.OperatingAirline.Code}}
+              td {{segment.OperatingAirline.FlightNumber}}
+              td 
+                div(mj-stripe cost='flight.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount', description='vacation.title', vacation='vacation._id', itinerary='flight.AirItinerary')
+div(ng-if='vacation.flight.charge.id')
+  .container-fluid
+    .row
+      .col-xs-10   
+        .lead Your Departure Flights:
+        table.table.table-striped(ng-repeat='rflight in vacation.flight.itinerary.leaving')  
+          thead
+            tr
+              th Departing from:
+              th Arriving At:
+              th Duration:
+              th Flight #
+              th Airline
+          tbody
+            tr
+              td {{rflight.departure}}
+              td {{rflight.arrival }}
+              td {{rflight.duration}}
+              td {{rflight.flight}}
+              td {{rflight.airline}}
+        div.lead Your Return Flights:
+        table.table.table-striped(ng-repeat='rflight in vacation.flight.itinerary.returning')  
+          thead
+            tr
+              th Departing from:
+              th Arriving At:
+              th Duration:
+              th Flight #
+              th Airline
+          tbody
+            tr
+              td {{rflight.departure}}
+              td {{rflight.arrival }}
+              td {{rflight.duration}}
+              td {{rflight.flight}}
+              td {{rflight.airline}}
+        .lead.bg-primary Your Ticket
+          p {{vacation.flight.charge.amount}}
+          p {{vacation.flight.date}}
+            

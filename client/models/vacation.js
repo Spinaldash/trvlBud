@@ -15,14 +15,19 @@ angular.module('angular-prototype')
       return $http.get('/vacations');
     }
 
-    function showFlights(vacationId) {
-      return $http.get('/flights/' + vacationId);
+    function showFlights(vacation) {
+      return $http.post('/flights', vacation);
+    }
+
+    function purchaseFlight(vacationId, info){
+      return $http.post(`/vacations/${vacationId}/flights/purchase`, info)
     }
 
     return{
       create:create,
       showVacation:showVacation,
       listVacations:listVacations,
-      showFlights:showFlights
+      showFlights:showFlights,
+      purchaseFlight:purchaseFlight
     };
   }]);

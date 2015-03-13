@@ -16,7 +16,9 @@ angular.module('angular-prototype', ['ui.router', 'ngMessages', 'satellizer'])
 
 
       .state('register', {url:'/register', templateUrl:'/views/users/users.html', controller:'UsersCtrl'})
-      .state('login', {url:'/login', templateUrl:'/views/users/users.html', controller:'UsersCtrl'});
+      .state('login', {url:'/login', templateUrl:'/views/users/users.html', controller:'UsersCtrl'})
+      
+      .state('profile', {url:'/profile', templateUrl:'/views/users/user_profile.html', controller:'ProfileCtrl'});
 
 
 
