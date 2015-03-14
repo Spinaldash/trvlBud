@@ -5,16 +5,10 @@ var Joi = require('joi');
 
 module.exports = {
   auth: false,
-  validate: {
-    payload: {
-      email: Joi.string().email(),
-
-    }
-  },
   handler: function(request, reply){
-    User.find({userId:request.auth.credentials._id}, function(err, user) {
+    console.log('REQUEST.payload:', request.payload);
+    User.findOneAndUpdate({_id:request.payload._id}, request.payload, function(err, user) {
       if(err){return reply().code(400);}
-      user.save;
     });
-  }
+  } 
 };

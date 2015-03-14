@@ -1,6 +1,7 @@
 'use strict';
 
 let Vacation = require('../../models/vacation');
+let Txt = require('../../models/text');
 
 
 module.exports = {
@@ -10,9 +11,12 @@ module.exports = {
         if(err){return reply().code(400);}
 
         vaca.assignItin(request.payload);
-        vaca.save(()=> {
-          reply(vaca);
-        });
+
+        Txt.send('7039092189', `Success! Your CC was charged $${vaca.flight.charge.amount.toFixed(2)}.`, (err, msg)=>{
+          vaca.save(()=> {
+            reply(vaca);
+          });
+        })
       });
     });
   }

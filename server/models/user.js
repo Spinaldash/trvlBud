@@ -17,7 +17,7 @@ let userSchema = mongoose.Schema({
   linkedin: String,
   twitter: String,
   createdAt: {type: Date, default: Date.now, required: true},
-  phoneNumber: Number
+  phoneNumber: String
 });
 
 userSchema.statics.preTwitter = function(cb){
@@ -72,6 +72,7 @@ userSchema.statics.github = function(payload, cb){
 };
 
 userSchema.statics.facebook = function(payload, cb){
+    console.log('FACEBOOK PAYLOAD', payload);
     let accessTokenUrl = 'https://graph.facebook.com/oauth/access_token';
     let graphApiUrl = 'https://graph.facebook.com/me';
     let params = {
@@ -82,9 +83,11 @@ userSchema.statics.facebook = function(payload, cb){
     };
 
     Request.get({ url: accessTokenUrl, qs: params, json: true }, (err, response, accessToken)=>{
+      console.log('accessToken from FB:', accessToken);
       accessToken = qs.parse(accessToken);
 
     Request.get({ url: graphApiUrl, qs: accessToken, json: true }, (err, response, profile)=>{
+      console.log('profile from FB:', profile);
       cb({facebook:profile.id, displayName: `${profile.first_name} ${profile.last_name}`, photoUrl:`http://graph.facebook.com/${profile.id}/picture?type=large`});
     });
   });
